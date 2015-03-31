@@ -1,0 +1,1 @@
+/usr/local/bin/qemu-img convert -p -f qcow2 -O qcow2 gluster://172.16.0.252/ccmp_vol/win2008_snap3.qcow2 gluster://172.16.0.252/ccmp_vol/backupOf1000000002_1427768198.qcow2
