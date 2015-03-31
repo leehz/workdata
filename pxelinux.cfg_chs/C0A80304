@@ -1,0 +1,4 @@
+default clonezilla-save
+label clonezilla-save
+        kernel vmlinuz
+        append initrd=initrd.img boot=live username=user config noswap edd=on nomodeset noeject locales="en_US.UTF-8" keyboard-layouts=NONE ocs_prerun="mount -t nfs 192.168.3.193:/var/lib/clustertech/chess-mgmt/images /home/partimag" ocs_live_run="/usr/sbin/ocs-sr -q2 -b -j2 -z1 -i 100000 -p poweroff -taskid 63 savedisk image_40 sda" ocs_live_extra_param="" ocs_live_batch=no vga=788 ip= nosplash i915.blacklist=yes radeonhd.blacklist=yes nouveau.blacklist=yes vmwgfx.enable_fbdev=no nicif=00:24:e8:60:36:6f fetch=tftp://192.168.3.193/filesystem.squashfs
