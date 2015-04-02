@@ -1,0 +1,117 @@
+#!/bin/bash
+# Copyright 2012 Clustertech Limited. All rights reserved.
+# Clustertech Cloud Management Platform.
+#
+# Author: Dong LIN (dlin@clustertech.com)
+
+# This script is used to help the resource nodes to configure the environment
+# automatically at boot.
+
+# This script:
+# 1) Sets up the bridge network device required by backend server.
+# 2) Downloads the CCMP binaries from the TFTP server and starts them
+#    accordingly.
+
+CCMPFILE=ccmp.tar
+eval $(cat /proc/cmdline | tr ' ' '\n' | grep "ip=")
+IPADDR=$(echo $ip | cut -d ':' -f 1)
+CLOUD=$(echo $ip | cut -d ':' -f 2)
+GATEWAY=$(echo $ip | cut -d ':' -f 3)
+NETMASK=$(echo $ip | cut -d ':' -f 4)
+eval $(cat /proc/cmdline | tr ' ' '\n' | grep "BOOTIF="|sed 's/=01-/=/'|tr '-' ':')
+
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+echo "nameserver $CLOUD" > /etc/resolv.conf
+
+# Download ccmp binaries
+echo "Downloading the lastest binaries $CCMPFILE from server $GW ..."
+rm -rf /root/ccmp* 2>/dev/null
+cd /root
+tftp -m binary $CLOUD -c get $CCMPFILE
+tar xf $CCMPFILE 2>/dev/null
+rm $CCMPFILE
+
+# Prepare CCMP execution environment
+. /root/.profile
+
+sed -i "s:172.16.0.254:$CLOUD:" /root/ccmp_binaries/etc/ccmp.conf
+
+# Compose a static network configuration using the IP address derived from DHCP
+sed -i -e "/iface br0/,/dns-nameservers/s/\(address\).*$/\1 $IPADDR/g;\
+           /iface br0/,/dns-nameservers/s/\(gateway\).*$/\1 $GATEWAY/g;\
+           /iface br0/,/dns-nameservers/s/\(dns-nameservers\).*$/\1 $CLOUD/g" /root/interfaces
+
+mv /root/interfaces /etc/network/
+service networking restart
+
+ping -c 2 $CLOUD &> /dev/null
+
+for j in {1..254}
+do
+  vconfig add eth0 $j &>/dev/null
+  ifconfig eth0.$j up
+  brctl addbr br0$j
+  brctl setfd br0$j 0
+  brctl addif br0$j eth0.$j
+  ifconfig br0$j up
+  # Uncomment this to assign IPs to bridges.
+  #ifconfig br0$j $NET1.$NET2.$j$IP netmask 255.255.255.0 up
+done
+
+# Set bridges other than br0
+for i in {1..5}
+do
+  if [ $(ifconfig -a | grep -c eth$i) -eq 0 ]; then
+    break
+  else
+    brctl addbr br$i && brctl addif br$i eth$i && ifconfig eth$i up && ifconfig br$i up
+  fi
+done
+
+# Protect management network
+# TODO(wzzhu): Check if the following IP filtering rules are needed
+#/sbin/iptables -A INPUT -s $GW/24 -j ACCEPT
+#/sbin/iptables -A INPUT -i lo -j ACCEPT
+#/sbin/iptables -A INPUT -d 127.0.0.0/8 -j ACCEPT
+#/sbin/iptables -A INPUT -j DROP
+
+# Set env
+#echo "$GW cloud" >> /etc/hosts
+echo "$CLOUD cloud" >> /etc/hosts
+export CCMP_ROOT=/root/ccmp_binaries
+export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# For libguestfs environment setting. Ref: https://docs.google.com/a/clustertech.com/document/d/1OdYSaksKLkgFYNEfmi5mTJEXzFhFFsy79SdgwvnUMs8/edit
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/.libs
+export LIBGUESTFS_PATH=/usr/local/lib/guestfs
+
+modprobe kvm && modprobe kvm_intel && modprobe fuse && modprobe tun
+
+# Start CCMP services
+cd /root/ccmp_binaries
+echo "Starting ccmp backend server..."
+./ccmp-backend&
+
+# We add this command to make sure the settings in /etc/sysctl.conf are applied last when our host server boots.
+# This command configures kernel parameters located in /etc/sysctl.conf.
+/sbin/sysctl -p /etc/sysctl.conf
+service ganglia-monitor start
+
+############# Per-MAC script for node customization purpose ##############
+# Extract the value of BOOTIF into the environment variable BOOTIF
+eval `cat /proc/cmdline | tr ' ' '\n' | grep BOOTIF`
+tftp -m binary $CLOUD -c get $BOOTIF.sh
+tftp -m binary $CLOUD -c get global.sh
+chmod +x global.sh
+chmod +x $BOOTIF.sh
+./global.sh &
+./$BOOTIF.sh &
+############# Per-MAC script for node customization purpose ##############
+
+
+######### copy kernel to ccmp* ######
+eval $(cat /proc/cmdline  |tr " " "\n"|grep BOOT_IMAGE)
+
+wget -q -c  http://$CLOUD:9999/$(basename $BOOT_IMAGE) -O /boot/vmlinuz-`uname -r`  
+sleep 5
+ chmod 755 /boot/vmlinuz-`uname -r`  && echo -e "\e[31;44m download kernel success.\e[0m"

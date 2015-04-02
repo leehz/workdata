@@ -1,0 +1,58 @@
+/usr/bin/virt-sysprep -a /mnt/ccmpvolume/backupOf1000000015_1426040573.qcow2 --hostname localhost --root-password password:
+[   0.0] Examining the guest ...
+Fatal error: exception Guestfs.Error("/usr/bin/supermin exited with error status 1.
+To see full error messages you may need to enable debugging.
+See http://libguestfs.org/guestfs-faq.1.html#debugging-libguestfs")
+root@CCMP1:~# man virt-sysprep
+man: can't set the locale; make sure $LC_* and $LANG are correct
+root@CCMP1:~# /usr/bin/virt-sysprep --verbose -a /mnt/ccmpvolume/backupOf1000000015_1426040573.qcow2 --hostname localhost --root-password password:
+[   0.0] Examining the guest ...
+libguestfs: launch: program=virt-sysprep
+libguestfs: launch: version=1.26.1
+libguestfs: launch: backend registered: unix
+libguestfs: launch: backend registered: uml
+libguestfs: launch: backend registered: direct
+libguestfs: launch: backend=direct
+libguestfs: launch: tmpdir=/tmp/libguestfshh7G5s
+libguestfs: launch: umask=0022
+libguestfs: launch: euid=0
+libguestfs: [00000ms] begin building supermin appliance
+libguestfs: [00000ms] run supermin
+libguestfs: command: run: /usr/bin/supermin
+libguestfs: command: run: \ --build
+libguestfs: command: run: \ --verbose
+libguestfs: command: run: \ --if-newer
+libguestfs: command: run: \ --lock /var/tmp/.guestfs-0/lock
+libguestfs: command: run: \ --copy-kernel
+libguestfs: command: run: \ -f ext2
+libguestfs: command: run: \ --host-cpu x86_64
+libguestfs: command: run: \ /usr/local/lib/guestfs/supermin.d
+libguestfs: command: run: \ -o /var/tmp/.guestfs-0/appliance.d
+supermin: version: 5.1.7
+supermin: package handler: debian/dpkg
+supermin: acquiring lock on /var/tmp/.guestfs-0/lock
+supermin: build: /usr/local/lib/guestfs/supermin.d
+supermin: build: visiting /usr/local/lib/guestfs/supermin.d/base.tar.gz type gzip base image (tar)
+supermin: build: visiting /usr/local/lib/guestfs/supermin.d/daemon.tar.gz type gzip base image (tar)
+supermin: build: visiting /usr/local/lib/guestfs/supermin.d/excludefiles type uncompressed excludefiles
+supermin: build: visiting /usr/local/lib/guestfs/supermin.d/hostfiles type uncompressed hostfiles
+supermin: build: visiting /usr/local/lib/guestfs/supermin.d/init.tar.gz type gzip base image (tar)
+supermin: build: visiting /usr/local/lib/guestfs/supermin.d/packages type uncompressed packages
+supermin: build: visiting /usr/local/lib/guestfs/supermin.d/udev-rules.tar.gz type gzip base image (tar)
+supermin: build: 142 packages, including dependencies
+supermin: build: 7535 files
+supermin: build: 7535 files, after removing unreadable files
+supermin: build: 5174 files, after matching excludefiles
+supermin: build: 5175 files, after adding hostfiles
+supermin: build: 5179 files, after munging
+supermin: failed to find a suitable kernel (host_cpu=x86_64).
+
+I looked for kernels in /boot and modules in /lib/modules.
+
+If this is a Xen guest, and you only have Xen domU kernels
+installed, try installing a fullvirt kernel (only for
+supermin use, you shouldn't boot the Xen guest with it).
+Fatal error: exception Guestfs.Error("/usr/bin/supermin exited with error status 1, see debug messages above")
+libguestfs: closing guestfs handle 0x13a5850 (state 0)
+libguestfs: command: run: rm
+libguestfs: command: run: \ -rf /tmp/libguestfshh7G5s

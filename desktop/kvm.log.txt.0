@@ -1,0 +1,105 @@
+root@CCMP2:/var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3# ./CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.kvm+ probeKvm
+++ which kvm
++ KVM=/usr/bin/kvm
++ '[' /usr/bin/kvm == '' ']'
++ probeScreen
++ '[' -x /usr/bin/screen.real ']'
+++ which screen
++ RUNSCREEN=/usr/bin/screen
++ removeDeadScreens
++ /usr/bin/screen -wipe
+No Sockets found in /var/run/screen/S-root.
+
++ mkdir -p /var/run/ct-cloud/kvm
++ sourceConfigFiles
+++ dirname ./CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.kvm
++ VM_CONF_DIR=.
+++ cd .
+++ pwd
+++ cd -
++ VM_CONF_DIR=/var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3
+++ basename /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3
++ VM_NAME=CCMP29b2f62d-b576-4b10-a796-182b03eb90c3
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/cpus
+++ KVM_VM_CPUS=4,sockets=1,cores=4,threads=1
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/ram
+++ KVM_VM_RAM=8192
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/localdisk
+++ KVM_VM_LOCAL_DISK=
+++ KVM_VM_LOCAL_DISK_SIZE=
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/systemdisk
+++ KVM_VM_SYSTEM_DISK='-drive file='
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/iso
+++ KVM_VM_ISO=
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/cpumodel
+++ KVM_VM_CPU_MODEL=host
++ cp /dev/null /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/taps
++ for netConfigFile in '$VM_CONF_DIR/net*'
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/net1
+++ KVM_VM_NET_1='-net nic,vlan=1,macaddr=00:16:3e:f8:33:fe,model=virtio -net tap,vlan=1,script=/var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/ccmp-kvm-ifup-net1,downscript=/root/ccmp_binaries/etc/templates/kvm/ccmp-kvm-ifdown'
+++ KVM_VM_MAC_1=00:16:3e:f8:33:fe
++ for netConfigFile in '$VM_CONF_DIR/net*'
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/net2
+++ KVM_VM_NET_2='-net nic,vlan=2,macaddr=00:16:3e:af:6d:ac,model=virtio -net tap,vlan=2,script=/var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/ccmp-kvm-ifup-net2,downscript=/root/ccmp_binaries/etc/templates/kvm/ccmp-kvm-ifdown'
+++ KVM_VM_MAC_2=00:16:3e:af:6d:ac
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/vnc
+++ KVM_VM_VNC=:1
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/boot
+++ KVM_VM_BOOT='-boot dc'
++ '[' -f /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/vncpassword ']'
++ . /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/vncpassword
+++ KVM_VM_VNCPASSWORD=zqjuHj
++ startVm
++ KVM_VM_DISK='-drive file=,if=virtio '
++ KVM_VM_NET='-net nic,vlan=1,macaddr=00:16:3e:f8:33:fe,model=virtio -net tap,vlan=1,script=/var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/ccmp-kvm-ifup-net1,downscript=/root/ccmp_binaries/etc/templates/kvm/ccmp-kvm-ifdown -net nic,vlan=2,macaddr=00:16:3e:af:6d:ac,model=virtio -net tap,vlan=2,script=/var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/ccmp-kvm-ifup-net2,downscript=/root/ccmp_binaries/etc/templates/kvm/ccmp-kvm-ifdown           '
++ echo 'KVM vm CCMP29b2f62d-b576-4b10-a796-182b03eb90c3 starting up ...'
++ logger
++ /usr/bin/screen -dmS 00:16:3e:f8:33:fe /usr/bin/kvm -drive file=,if=virtio -cpu host -m 8192 -smp 4,sockets=1,cores=4,threads=1 -boot dc -net nic,vlan=1,macaddr=00:16:3e:f8:33:fe,model=virtio -net tap,vlan=1,script=/var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/ccmp-kvm-ifup-net1,downscript=/root/ccmp_binaries/etc/templates/kvm/ccmp-kvm-ifdown -net nic,vlan=2,macaddr=00:16:3e:af:6d:ac,model=virtio -net tap,vlan=2,script=/var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/ccmp-kvm-ifup-net2,downscript=/root/ccmp_binaries/etc/templates/kvm/ccmp-kvm-ifdown -vnc :1 -device virtio-balloon-pci,id=balloon -usbdevice tablet -monitor unix:/var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon,server,nowait -qmp unix:/var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.sock,server,nowait
++ '[' zqjuHj ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=1
++ '[' 1 == 10 ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=2
++ '[' 2 == 10 ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=3
++ '[' 3 == 10 ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=4
++ '[' 4 == 10 ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=5
++ '[' 5 == 10 ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=6
++ '[' 6 == 10 ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=7
++ '[' 7 == 10 ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=8
++ '[' 8 == 10 ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=9
++ '[' 9 == 10 ']'
++ '[' '!' -f /var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon ']'
++ sleep 1
++ LOOP=10
++ '[' 10 == 10 ']'
++ break
++ echo 'change vnc password zqjuHj'
++ socat stdio UNIX-CONNECT:/var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon
+2015/03/23 15:34:56 socat[6768] E connect(3, AF=1 "/var/run/ct-cloud/kvm/kvm.CCMP29b2f62d-b576-4b10-a796-182b03eb90c3.mon", 72): Connection refused
++ '[' -f /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/blockdevices ']'
++ cat /var/lib/kvm/ct-cloud/CCMP29b2f62d-b576-4b10-a796-182b03eb90c3/blockdevices
++ read blkDevName blkDevFormat blkDevPath

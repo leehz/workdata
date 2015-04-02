@@ -1,0 +1,12 @@
+CCMP license issued by ClusterTech:
+  Issue date:	2015-03-06 15:45:47
+  Max. nodes:	4
+  Valid days:	1826
+  Expire date:	2020-03-06 15:45:47
+
+
+-----BEGIN LICENSE-----
+1583480747$2a$10$zBSOpSXta/BFrrMhdkBlvOvQmJWDfMnlFS2u0pvPQyU84Wzti5AU.
+1425627947$2a$10$qxMaBq5EL5L2ayCbwg2RwuvUJRpDFZ9Dbz4kkyGNSGdqiHG7h36kC
+0000000004$2a$10$VGZjDJsN9mtQxN9NKtsQ6uw5Pd.QgJBinz/CJ0hgFoxMRgISgfqj6
+-----END LICENSE-----

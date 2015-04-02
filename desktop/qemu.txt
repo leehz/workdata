@@ -1,0 +1,1 @@
+1. qemu-system-x86_64 --enable-kvm -nographic -smp 4 -m 2048 -drive file=/mnt/glusterfs_volume/em.qcow2,if=virtio -net nic,model=virtio,macaddr=1a:46:0b:ca:bc:7b -net tap,script=/mnt/glusterfs_volume/kvm/qemu-ifup

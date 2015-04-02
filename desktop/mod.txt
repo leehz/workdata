@@ -1,0 +1,3 @@
+rmmod cciss && rmmod hpsa 
+modprobe cciss cciss_allow_hpsa=1
+modprobe hpsa hpsa_allow_any=1

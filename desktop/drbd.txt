@@ -1,0 +1,19 @@
+drbdsetup-83 0 net ipv4:192.168.3.86:7790 ipv4:192.168.3.88:7790 C --set-defaults --create-device --shared-secret=a6a0680c40bca2439dbe48343ddddcf4 --cram-hmac-alg=sha1
+
+
+
+drbdadm up ccmp_mysql
+drbdadm primary ccmp_mysql
+service mysql stop
+sleep 5
+mount /dev/drbd/by-res/ccmp_mysql /var/lib/mysql
+sleep 5
+service mysql start
+sleep 5
+
+
+
+drbdadm up ccmp_mysql
+drbdadm secondary ccmp_mysql
+service mysql stop
+

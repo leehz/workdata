@@ -1,0 +1,14 @@
+sudo apt-get install hadoop-yarn-resourcemanager
+
+sudo apt-get install hadoop-hdfs-namenode
+
+apt-get install hadoop-hdfs-secondarynamenode
+
+sudo apt-get install hadoop-yarn-nodemanager hadoop-hdfs-datanode hadoop-mapreduce
+
+sudo apt-get install hadoop-mapreduce-historyserver hadoop-yarn-proxyserver
+
+
+
+
+hadoop-0.20-mapreduce hadoop-client
