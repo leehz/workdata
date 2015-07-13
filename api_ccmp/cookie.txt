@@ -1,0 +1,8 @@
+HTTP/1.1 200 OK
+Cache-Control: private,max-age=0,must-revalidate
+Content-Type: application/json; charset=UTF-8
+Set-Cookie: XSRF-TOKEN=yJrWblGcySzApDTlWzKt69ilYzQ6MTQzNjc1MTk2OTk1NTY3NTEyOA==; Path=/; Expires=Tue, 14 Jul 2015 01:46:09 UTC
+Set-Cookie: USER_PORTAL_SESSION=MTQzNjc1MTk2OXxOd3dBTkVKTFF6WXpVMDAzVUVGTFMwZFBURUZZVEVKRlV6TktXRUkzUWxkWlMwUldURmMzTmpKVFRWa3lOMDlHUVZoTE5FcGFOa0U9fNrAk6FdMkJOVxuJUcDIVpoEBUDufvHlYTli4K9AP1vA; Path=/; Expires=Mon, 13 Jul 2015 02:16:09 UTC; Max-Age=1800
+Date: Mon, 13 Jul 2015 01:46:09 GMT
+Content-Length: 33
+

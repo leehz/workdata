@@ -1,0 +1,3 @@
+ curl -H "Content-Type: application/json" -X POST -d '{"username":"user","password":"123456"}' -D cookie.txt -ik  https://192.168.3.86:8080/auth
+curl -H "X-XSRF-TOKEN:yJrWblGcySzApDTlWzKt69ilYzQ6MTQzNjc1MTk2OTk1NTY3NTEyOA==" -b cookie.txt  -ik https://192.168.3.86:8080/hosts
+
